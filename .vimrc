@@ -1,11 +1,19 @@
 call pathogen#infect()
 
+
+"php syntax options {{{
+let php_sql_query = 1 "for SQL syntax highlighting inside strings
+let php_htmlInStrings = 1 "for HTML syntax highlighting inside strings
+"let php_folding = 1 "for folding classes and functions
+"" }}}
+
 "NerdTree
 map <silent> ` :NERDTreeToggle<CR>
 
 "OmniCompete use updated php completion file
 filetype plugin on
-au FileType php set omnifunc=phpcomplete#CompletePHP
+"au FileType php set omnifunc=phpcomplete#CompletePHP
+set omnifunc=phpcomplete#CompletePHP
 
 "OmniCompete, move to Cntl+Space
 inoremap <expr> <C-Space> pumvisible() \|\| &omnifunc == '' ?

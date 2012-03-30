@@ -7,6 +7,3 @@
 [submodule "bundle/supertab"]
 	path = bundle/supertab
 	url = https://github.com/ervandew/supertab.git
-[submodule "bundle/phpcomlete.vim"]
-	path = bundle/phpcomlete.vim
-	url = https://github.com/shawncplus/phpcomplete.vim.git
