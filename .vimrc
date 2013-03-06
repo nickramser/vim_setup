@@ -2,10 +2,11 @@ call pathogen#infect()
 
 
 set autoindent
-set copyindent
 set softtabstop=4 
 set shiftwidth=4 
-set expandtab 
+set expandtab
+
+let g:surround_{char2nr("p")} = "#{\r}"
 
 "php syntax options {{{
 let php_sql_query = 1 "for SQL syntax highlighting inside strings
@@ -15,9 +16,23 @@ let php_htmlInStrings = 1 "for HTML syntax highlighting inside strings
 
 "NerdTree
 map <silent> ` :NERDTreeToggle<CR>
+"map <silent> ` :NERDTree<CR>
+"map ` :call ToggleND()<CR>
+
+function ToggleND()
+    "if (!exists("t:NERDTreeBufName") || exists("b:NERDTreeType"))
+    if (exists("b:NERDTreeType"))
+        NERDTreeClose
+    else 
+        NERDTree
+    endif
+endfunction
 
 "OmniCompete use updated php completion file
 filetype plugin on
+syntax on             " Enable syntax highlighting
+filetype on           " Enable filetype detection
+filetype indent on    " Enable filetype-specific indenting
 au FileType php set omnifunc=phpcomplete#CompletePHP
 "au FileType java set omnifunc=javacomplete#Complete
 
@@ -42,18 +57,8 @@ let g:UltiSnipsEditSplit="vertical"
 "Ultisnips SuperTab prefs
 let g:SuperTabDefaultCompletionType = "context"
 
-
-autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
-
-" Close all open buffers on entering a window if the only
-" " buffer that's left is the NERDTree buffer
-function! s:CloseIfOnlyNerdTreeLeft()
-    if exists("t:NERDTreeBufName")
-    if bufwinnr(t:NERDTreeBufName) != -1
-    if winnr("$") == 1
-    q
-    endif
-    endif
-    endif
-    endfunction
+"open a NERDTree automatically when vim starts up if no files were specified
+autocmd vimenter * if !argc() | NERDTree | endif
+"close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
