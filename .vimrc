@@ -5,6 +5,10 @@ set autoindent
 set softtabstop=4 
 set shiftwidth=4 
 set expandtab
+set incsearch           " search as characters are entered
+set hlsearch 
+
+set runtimepath^=~/.vim/bundle/ctrlp.vim
 
 let g:surround_{char2nr("p")} = "#{\r}"
 
@@ -18,6 +22,8 @@ let php_htmlInStrings = 1 "for HTML syntax highlighting inside strings
 map <silent> ` :NERDTreeToggle<CR>
 "map <silent> ` :NERDTree<CR>
 "map ` :call ToggleND()<CR>
+
+:map <S-Tab> <C-W>w
 
 function ToggleND()
     "if (!exists("t:NERDTreeBufName") || exists("b:NERDTreeType"))
@@ -62,3 +68,5 @@ autocmd vimenter * if !argc() | NERDTree | endif
 "close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+autocmd QuickFixCmdPost *log* cwindow
+autocmd QuickFixCmdPost *grep* cwindow
